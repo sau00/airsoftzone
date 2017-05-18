@@ -2,9 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\Categories;
+use app\models\Cities;
 use app\models\Items;
 use app\models\Users;
 use Yii;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -62,24 +65,51 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $items = Items::find()->orderBy(['id' => SORT_DESC])->all();
+        $query = Items::find()->orderBy(['time' => SORT_DESC]);
+
+        $count = $query->count();
+        $pagination = new Pagination(['totalCount' => $count]);
+        $items = $query->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
 
         foreach($items as $item) {
             $item->user_id = Users::findOne(['id' => $item->user_id]);
+            $item->city_id = Cities::findOne(['id' => $item->city_id]);
+            $item->category_id = Categories::findOne(['id' => $item->category_id]);
         }
 
         return $this->render('index', [
-            'items' => $items
+            'items' => $items,
+            'pagination' => $pagination
         ]);
+    }
+
+    public function actionItem()
+    {
+        $request = Yii::$app->request;
+
+        $item = Items::findOne(['id' => $request->get('id')]);
+
+        if(isset($item)) {
+            $item->user_id = Users::findOne(['id' => $item->user_id]);
+            $item->city_id = Cities::findOne(['id' => $item->city_id]);
+            $item->category_id = Categories::findOne(['id' => $item->category_id]);
+
+            return $this->render('item', [
+                'item' => $item
+            ]);
+        } else {
+            return $this->render('error', [
+                'message' => 'Такой страницы не существует',
+                'name' => 'Ошибка 404'
+            ]);
+        }
     }
 
     public function actionAlpha()
     {
         return $this->render('alpha');
-    }
-
-    public function actionParse()
-    {
     }
 
     /**

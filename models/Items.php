@@ -9,12 +9,14 @@ use Yii;
  *
  * @property integer $id
  * @property integer $user_id
+ * @property integer $category_id
+ * @property integer $city_id
  * @property string $title
- * @property string $city
- * @property integer $shipping
  * @property string $description
- * @property string $vkpidaid
- * @property string $vk_image
+ * @property integer $price
+ * @property integer $shipping
+ * @property string $images
+ * @property string $time
  */
 class Items extends \yii\db\ActiveRecord
 {
@@ -32,11 +34,11 @@ class Items extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'title', 'description', 'vkpidaid', 'vk_image'], 'required'],
-            [['user_id', 'shipping'], 'integer'],
-            [['description', 'vk_image'], 'string'],
-            [['title', 'city', 'vkpidaid'], 'string', 'max' => 255],
-            [['vkpidaid'], 'unique'],
+            [['user_id', 'category_id', 'city_id', 'title', 'images'], 'required'],
+            [['user_id', 'category_id', 'city_id', 'price', 'shipping'], 'integer'],
+            [['description', 'images'], 'string'],
+            [['time'], 'safe'],
+            [['title'], 'string', 'max' => 45],
         ];
     }
 
@@ -48,12 +50,14 @@ class Items extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
+            'category_id' => 'Category ID',
+            'city_id' => 'City ID',
             'title' => 'Title',
-            'city' => 'City',
-            'shipping' => 'Shipping',
             'description' => 'Description',
-            'vkpidaid' => 'Vkpidaid',
-            'vk_image' => 'Vk Image',
+            'price' => 'Price',
+            'shipping' => 'Shipping',
+            'images' => 'Images',
+            'time' => 'Time',
         ];
     }
 }

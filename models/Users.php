@@ -8,8 +8,8 @@ use Yii;
  * This is the model class for table "users".
  *
  * @property integer $id
- * @property string $name
  * @property string $vk
+ * @property string $phone
  */
 class Users extends \yii\db\ActiveRecord
 {
@@ -27,9 +27,9 @@ class Users extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'vk'], 'required'],
-            [['name', 'vk'], 'string', 'max' => 255],
+            [['vk', 'phone'], 'string', 'max' => 45],
             [['vk'], 'unique'],
+            [['phone'], 'unique'],
         ];
     }
 
@@ -40,8 +40,8 @@ class Users extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
             'vk' => 'Vk',
+            'phone' => 'Phone',
         ];
     }
 }

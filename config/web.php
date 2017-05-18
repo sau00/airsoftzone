@@ -7,8 +7,8 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'modules' => [
-        'vk_parser' => [
-            'class' => '\app\modules\vk_parser\Module'
+        'parsers' => [
+            'class' => '\app\modules\parsers\Module'
         ]
     ],
     'components' => [

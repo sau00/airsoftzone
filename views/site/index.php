@@ -2,7 +2,6 @@
     $this->title = 'Доска страйкбольных объявлений AirsoftZone';
 ?>
 
-
 <div class="container">
 
     <h1><?=$this->title;?></h1>
@@ -19,19 +18,24 @@
             <?php foreach ($items as $item): ?>
                 <div class="row">
                     <div class="col-md-4">
-                        <a href="http://vk.com/id<?=$item->user_id->vk;?>" target="_blank">
-                            <img class="img-responsive" src="<?=$item->vk_image;?>" alt="">
+                        <a href="#">
+                            <img class="img-responsive" src="/uploads/items/<?=$item->id;?>/<?php $images = unserialize($item->images); echo $images[0];?>" alt="">
                         </a>
                     </div>
                     <div class="col-md-8">
                         <div class="caption">
-                            <h3><a href="http://vk.com/id<?=$item->user_id->vk;?>" target="_blank"><?=$item->user_id->name;?> (http://vk.com/id<?=$item->user_id->vk;?>)</a></h3>
-                            <?=$item->description;?>
+                            <h2 style="margin-top: 5px;"><a href="/index.php?r=site/item&id=<?=$item->id;?>"><?=$item->title;?></a></h2>
+                            <h4><?=$item->price;?> руб.</h4>
+                            <p class="text-muted"><?=$item->category_id->name;?></p>
+                            <p class="text-muted">г. <?=$item->city_id->name;?></p>
+                            <p class="text-muted"><?=$item->time;?></p>
                         </div>
                     </div>
                 </div>
+
                 <hr />
             <?php endforeach; ?>
+            <?=\yii\widgets\LinkPager::widget(['pagination' => $pagination]);?>
         </div><!--/.col-xs-12.col-sm-9-->
 
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
