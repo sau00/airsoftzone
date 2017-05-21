@@ -37,7 +37,7 @@ $this->title = $item->title . ' купить ' . $item->city_id->name;
 
                         <p><span class="text-muted">Город</span> <br /> <?=$item->city_id->name;?></p>
                         <p><span class="text-muted">Пересыл</span> <br /> <?php if($item->shipping == 1) echo 'Есть'; else echo 'Нет'?></p>
-                        <p><span class="text-muted">Добавлено</span> <br /> <?=$item->time;?></p>
+                        <p><span class="text-muted">Добавлено</span> <br /> <?=\yii\helpers\Html::displayDate($item->time);?></p>
                     </div>
                 </div>
             </div>

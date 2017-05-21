@@ -28,7 +28,7 @@
                             <h4><?=$item->price;?> руб.</h4>
                             <p class="text-muted"><?=$item->category_id->name;?></p>
                             <p class="text-muted">г. <?=$item->city_id->name;?></p>
-                            <p class="text-muted"><?=$item->time;?></p>
+                            <p class="text-muted"><?=\yii\helpers\Html::displayDate($item->time);?></p>
                         </div>
                     </div>
                 </div>
