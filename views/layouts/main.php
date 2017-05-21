@@ -36,6 +36,7 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
+            ['label' => 'Подать объявление', 'url' => ['https://vk.com/airsoftzoneru?w=wall-145778249_4']],
             ['label' => 'О проекте', 'url' => ['/site/about']],
             ['label' => 'Контакты', 'url' => ['/site/about']],
         ],
