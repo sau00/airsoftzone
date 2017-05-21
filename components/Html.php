@@ -20,7 +20,7 @@ class Html extends BaseHtml
             return 'Вчера ' . date('H:i', strtotime($date));
         else {
             $months = ['', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
-            return date('d', strtotime($date)) . ' ' . $months[date('n', strtotime($date))] . ' в ' . date('H:i', strtotime($date));
+            return date('d', strtotime($date)) . ' ' . $months[date('n', strtotime($date))] . ' ' . date('H:i', strtotime($date));
         }
     }
 }
