@@ -16,6 +16,8 @@ class MainController extends \yii\web\Controller
 {
     public function actionIndex()
     {
+        $this->enableCsrfValidation = false;
+
         echo 'cd743aa7';
 //        if (!isset($_REQUEST)) {
 //            return;
