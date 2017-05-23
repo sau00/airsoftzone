@@ -25,15 +25,12 @@ $this->title = 'Агрегатор объявлений групп Вконта�
                     </div>
                 </div>
             </form>
+            <h3>Найдено <?=$amount; ?> объявлений</h3>
             <hr />
 
             <p class="pull-right visible-xs">
                 <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
             </p>
-
-            <?php if(!$items): ?>
-                <h2>По вашему запросу ничего не найдено</h2>
-            <?php endif; ?>
 
             <?php foreach ($items as $item): ?>
                 <div class="row">

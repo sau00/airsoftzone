@@ -105,7 +105,8 @@ class SiteController extends Controller
         return $this->render('vk', [
             'items' => $items,
             'pagination' => $pagination,
-            'query' => $request->get('query')
+            'query' => $request->get('query'),
+            'amount' => $count
         ]);
     }
 
