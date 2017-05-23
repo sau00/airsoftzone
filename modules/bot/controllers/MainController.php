@@ -14,9 +14,18 @@ use app\modules\parsers\models\AwgmModel;
  */
 class MainController extends \yii\web\Controller
 {
+    public function beforeAction($action)
+    {
+        if ($action->id == 'index') {
+            $this->enableCsrfValidation = false;
+        }
+
+        return parent::beforeAction($action);
+    }
+
     public function actionIndex()
     {
-        $this->enableCsrfValidation = false;
+//        $this->enableCsrfValidation = false;
 
         echo 'cd743aa7';
 //        if (!isset($_REQUEST)) {
