@@ -58,7 +58,7 @@ class MainController extends \yii\web\Controller
 
 //С помощью messages.send и токена сообщества отправляем ответное сообщение
                 $request_params = array(
-                    'message' => "Привет, {$user_name}!",
+                    'message' => "Привет, {$user_name}! Надеюсь, что ты не маклаудишь.",
                     'user_id' => $user_id,
                     'access_token' => $token,
                     'v' => '5.0'
