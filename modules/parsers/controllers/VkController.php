@@ -86,9 +86,6 @@ class VkController extends \yii\web\Controller
                     }
 
                     $vk_item->description = strip_tags($vk_item->description);
-                    echo $vk_item->description;
-                    exit();
-                    print_r($vk_item);
 
                     if (!VkItems::findOne(['md5' => $vk_item->md5])) {
                         if (strlen($vk_item->description) > 10) {
