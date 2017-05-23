@@ -6,6 +6,7 @@ use app\models\Categories;
 use app\models\Cities;
 use app\models\Items;
 use app\models\Users;
+use app\models\VkItems;
 use Yii;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
@@ -82,6 +83,29 @@ class SiteController extends Controller
         return $this->render('index', [
             'items' => $items,
             'pagination' => $pagination
+        ]);
+    }
+
+    public function actionVk()
+    {
+        $request = Yii::$app->request;
+
+        if($request->get('query')) {
+            $query = VkItems::find()->where(['like', 'description', $request->get('query')])->orderBy(['id' => SORT_DESC]);
+        } else {
+            $query = VkItems::find()->orderBy(['id' => SORT_DESC]);
+        }
+
+        $count = $query->count();
+        $pagination = new Pagination(['totalCount' => $count]);
+        $items = $query->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        return $this->render('vk', [
+            'items' => $items,
+            'pagination' => $pagination,
+            'query' => $request->get('query')
         ]);
     }
 
