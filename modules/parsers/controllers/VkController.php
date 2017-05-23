@@ -86,6 +86,9 @@ class VkController extends \yii\web\Controller
                     }
 
                     $vk_item->description = strip_tags($vk_item->description);
+                    var_dump(mb_detect_encoding($vk_item->description));
+                    exit();
+//                    $vk_item->description = strip_tags(mb_convert_encoding($vk_item->description, "UTF-8", "CP-1251"));
 
                     if (!VkItems::findOne(['md5' => $vk_item->md5])) {
                         if (strlen($vk_item->description) > 10) {
