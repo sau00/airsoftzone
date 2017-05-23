@@ -86,7 +86,8 @@ class VkController extends \yii\web\Controller
                     }
 
                     $vk_item->description = preg_replace("/[^а-яa-z0-9.]+/i", "", strip_tags($vk_item->description));
-
+                    echo $vk_item->description;
+                    exit();
                     print_r($vk_item);
 
                     if (!VkItems::findOne(['md5' => $vk_item->md5])) {
