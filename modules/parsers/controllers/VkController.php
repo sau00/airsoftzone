@@ -52,73 +52,76 @@ class VkController extends \yii\web\Controller
 
         $groups = [
             '76629546' => [
-                '203426857'
+                '203426857', '203426992'
             ],
             '13212026' => [
-                '244826162'
+                '244826162', '244826144'
             ],
             '45753674' => [
-                '237603507'
+                '237603507', '237603477'
             ]
         ];
 
         foreach ($groups as $group_key => $group_albums) {
-            $method = 'photos.get';
-            $parameters = [
-                'owner_id' => '-' . $group_key,
-                'album_id' => $group_albums[0],
-                'count' => '1000',
-                'rev' => '1'
-            ];
+            foreach($group_albums as $album_key => $group_album)
+            {
+                $method = 'photos.get';
+                $parameters = [
+                    'owner_id' => '-' . $group_key,
+                    'album_id' => $group_album,
+                    'count' => '1000',
+                    'rev' => '1'
+                ];
 
-            $url = 'https://api.vk.com/method/' . $method . '?' . http_build_query($parameters);
+                $url = 'https://api.vk.com/method/' . $method . '?' . http_build_query($parameters);
 
-            $response = json_decode(file_get_contents($url), TRUE);
+                $response = json_decode(file_get_contents($url), TRUE);
 
-            if (isset($response['response'])) {
-                foreach ($response['response'] as $key => $item) {
-                    $vk_item = new VkItems();
+                if (isset($response['response'])) {
+                    foreach ($response['response'] as $key => $item) {
+                        $vk_item = new VkItems();
 
-                    $vk_item->photo = $item['src_big'];
+                        $vk_item->photo = $item['src_big'];
 
-                    $vk_item->description = $item['text'];
+                        $vk_item->description = $item['text'];
 
-                    $vk_item->url = 'photo' . $item['owner_id'] . '_' . $item['pid'];
-                    $vk_item->md5 = md5($vk_item->url);
-                    $vk_item->author_id = $item['user_id'];
-                    $vk_item->group_id = $group_key;
-                    $vk_item->timestamp = $item['created'];
+                        $vk_item->url = 'photo' . $item['owner_id'] . '_' . $item['pid'];
+                        $vk_item->md5 = md5($vk_item->url);
+                        $vk_item->author_id = $item['user_id'];
+                        $vk_item->group_id = $group_key;
+                        $vk_item->timestamp = $item['created'];
 
-                    $method = 'photos.getComments';
+                        $method = 'photos.getComments';
 
-                    $parameters = [
-                        'owner_id' => $item['owner_id'],
-                        'photo_id' => $item['pid'],
-                        'access_token' => '701c2fea2814147e4eadc0e09af2a75884d6a6f2b2df97b391996a1bdb7b336283238fa43acfdb3250f8d'
-                    ];
+                        $parameters = [
+                            'owner_id' => $item['owner_id'],
+                            'photo_id' => $item['pid'],
+                            'access_token' => '701c2fea2814147e4eadc0e09af2a75884d6a6f2b2df97b391996a1bdb7b336283238fa43acfdb3250f8d'
+                        ];
 
-                    $comments_request_url = 'https://api.vk.com/method/' . $method . '?' . http_build_query($parameters);
+                        $comments_request_url = 'https://api.vk.com/method/' . $method . '?' . http_build_query($parameters);
 
-                    $comments_response = json_decode(file_get_contents($comments_request_url), TRUE);
+                        $comments_response = json_decode(file_get_contents($comments_request_url), TRUE);
 
-                    if (isset($comments_response['response'])) {
-                        foreach ($comments_response['response'] as $comment_key => $comment) {
-                            if ($comment['from_id'] == $item['user_id']) {
-                                $vk_item->description .= $comment['message'];
+                        if (isset($comments_response['response'])) {
+                            foreach ($comments_response['response'] as $comment_key => $comment) {
+                                if ($comment['from_id'] == $item['user_id']) {
+                                    $vk_item->description .= $comment['message'];
+                                }
+                            }
+                        }
+
+                        $vk_item->description = preg_replace("/[^A-Za-z0-9 ]/", '', rus2translit(trim(strip_tags($vk_item->description))));
+
+                        if (!VkItems::findOne(['md5' => $vk_item->md5])) {
+                            if (strlen($vk_item->description) > 10) {
+                                $vk_item->save();
                             }
                         }
                     }
-
-                    $vk_item->description = preg_replace("/[^A-Za-z0-9 ]/", '', rus2translit(trim(strip_tags($vk_item->description))));
-
-                    if (!VkItems::findOne(['md5' => $vk_item->md5])) {
-                        if (strlen($vk_item->description) > 10) {
-                            $vk_item->save();
-                        }
-                    }
+                } else {
+                    print_r($response);
                 }
-            } else {
-                print_r($response);
             }
         }
     }
