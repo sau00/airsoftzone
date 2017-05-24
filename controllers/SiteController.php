@@ -121,7 +121,7 @@ class SiteController extends Controller
         $request = Yii::$app->request;
 
         if($request->get('query')) {
-            $query = VkItems::find()->where(['like', 'description', rus2translit($request->get('query'))])->orderBy(['id' => SORT_DESC]);
+            $query = VkItems::find()->where(['like', 'description', rus2translit($request->get('query'))])->orderBy(['timestamp' => SORT_DESC]);
         } else {
             $query = VkItems::find()->orderBy(['timestamp' => SORT_DESC]);
         }
