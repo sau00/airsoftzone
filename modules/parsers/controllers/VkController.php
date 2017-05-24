@@ -85,8 +85,7 @@ class VkController extends \yii\web\Controller
                         }
                     }
 
-                    mb_internal_encoding('UTF-8');
-                    $vk_item->description = mb_convert_encoding(strip_tags($vk_item->description), 'UTF-8', 'UTF-8');
+                    $vk_item->description = iconv('windows-1251', 'UTF-8', strip_tags($vk_item->description));
 
                     if (!VkItems::findOne(['md5' => $vk_item->md5])) {
                         if (strlen($vk_item->description) > 10) {
