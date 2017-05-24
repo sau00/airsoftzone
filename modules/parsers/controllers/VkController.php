@@ -116,8 +116,6 @@ class VkController extends \yii\web\Controller
                             $vk_item->save();
                         }
                     }
-
-                    exit();
                 }
             } else {
                 print_r($response);
