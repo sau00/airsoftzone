@@ -14,6 +14,7 @@ use Yii;
  * @property string $md5
  * @property integer $author_id
  * @property integer $group_id
+ * @property integer $timestamp
  */
 class VkItems extends \yii\db\ActiveRecord
 {
@@ -31,9 +32,9 @@ class VkItems extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['photo', 'description', 'url', 'md5', 'author_id', 'group_id'], 'required'],
+            [['photo', 'description', 'url', 'md5', 'author_id', 'group_id', 'timestamp'], 'required'],
             [['photo', 'description', 'url'], 'string'],
-            [['author_id', 'group_id'], 'integer'],
+            [['author_id', 'group_id', 'timestamp'], 'integer'],
             [['md5'], 'string', 'max' => 45],
         ];
     }
@@ -51,6 +52,7 @@ class VkItems extends \yii\db\ActiveRecord
             'md5' => 'Md5',
             'author_id' => 'Author ID',
             'group_id' => 'Group ID',
+            'timestamp' => 'Timestamp',
         ];
     }
 }

@@ -33,7 +33,7 @@ class VkController extends \yii\web\Controller
                 'ч' => 'ch',  'ш' => 'sh',  'щ' => 'sch',
                 'ь' => '\'',  'ы' => 'y',   'ъ' => '\'',
                 'э' => 'e',   'ю' => 'yu',  'я' => 'ya',
-                ' ' => ' ',
+                ' ' => ' ',   '&' => '_',
 
                 'А' => 'A',   'Б' => 'B',   'В' => 'V',
                 'Г' => 'G',   'Д' => 'D',   'Е' => 'E',
@@ -49,12 +49,6 @@ class VkController extends \yii\web\Controller
             );
             return strtr($string, $converter);
         }
-
-//        $groups = [
-//            '76629546' => 'СТРАЙКБОЛЬНАЯ БАРАХОЛКА | страйкбол',
-//            '13212026' => 'Единая Страйкбольная Группа Страйкбол',
-//            '45753674' => 'Страйкбол базар AIRSOFT4YOU'
-//        ];
 
         $groups = [
             '76629546' => [
@@ -93,7 +87,7 @@ class VkController extends \yii\web\Controller
                     $vk_item->md5 = md5($vk_item->url);
                     $vk_item->author_id = $item['user_id'];
                     $vk_item->group_id = $group_key;
-
+                    $vk_item->timestamp = $item['created'];
 
                     $method = 'photos.getComments';
 
