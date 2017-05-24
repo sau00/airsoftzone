@@ -132,7 +132,7 @@ class SiteController extends Controller
             ->limit($pagination->limit)
             ->all();
 
-        file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/uploads/items/log.txt', $request->get('query') . "\r\n", FILE_APPEND);
+        file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/uploads/items/log.txt', rus2translit($request->get('query')) . "\r\n", FILE_APPEND);
 
         return $this->render('vk', [
             'items' => $items,
