@@ -117,6 +117,7 @@ class VkController extends \yii\web\Controller
                         }
                     }
 
+                    exit();
                 }
             } else {
                 print_r($response);

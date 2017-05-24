@@ -59,6 +59,7 @@ $this->title = 'Агрегатор объявлений групп Вконта�
                                     echo $groups[$item->group_id];
                                     ?>
                                 </a></p>
+                            <p class="text-muted">Добавлено: <?= date('Y-m-d H:i:s', $item->timestamp); ?></p>
                         </div>
                     </div>
                 </div>
