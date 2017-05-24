@@ -93,7 +93,7 @@ class SiteController extends Controller
         if($request->get('query')) {
             $query = VkItems::find()->where(['like', 'description', $request->get('query')])->orderBy(['id' => SORT_DESC]);
         } else {
-            $query = VkItems::find()->orderBy(['id' => SORT_DESC]);
+            $query = VkItems::find()->orderBy(['timestamp' => SORT_DESC]);
         }
 
         $count = $query->count();
