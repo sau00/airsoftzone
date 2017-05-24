@@ -87,6 +87,12 @@ class VkController extends \yii\web\Controller
 
                     $vk_item->description = trim(strip_tags($vk_item->description));
 
+                    $vk_item->description = preg_replace ("/[^a-zA-ZА-Яа-я0-9\s]/","", $vk_item->description);
+
+                    echo $vk_item->description;
+
+                    exit();
+
                     if (!VkItems::findOne(['md5' => $vk_item->md5])) {
                         if (strlen($vk_item->description) > 10) {
                             $vk_item->save();
