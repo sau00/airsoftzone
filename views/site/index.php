@@ -42,7 +42,7 @@
             <script type="text/javascript" src="//vk.com/js/api/openapi.js?144"></script>
 
             <!-- VK Widget -->
-            <div id="vk_groups"></div>
+            <div id="vk_groups" style="margin: 0 auto;"></div>
             <script type="text/javascript">
                 VK.Widgets.Group("vk_groups", {mode: 3}, 145778249);
             </script>
