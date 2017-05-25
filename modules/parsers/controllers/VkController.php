@@ -74,6 +74,86 @@ class VkController extends \yii\web\Controller
         }
     }
 
+    public function actionParse()
+    {
+        $request = \Yii::$app->request;
+
+        if(VkGroups::findOne(['group_id' => $request->get('group')])) {
+            $group = VkGroups::findOne(['group_id' => $request->get('group')]);
+            $albums = array_flip(unserialize($group->albums));
+            $album_id = $albums[$request->get('cat')];
+            $album_type = $request->get('cat');
+
+            if($album_id) {
+                $method = 'photos.get';
+                $parameters = [
+                    'owner_id' => '-' . $group->group_id,
+                    'album_id' => $album_id,
+                    'count' => '100',
+                    'rev' => '1'
+                ];
+
+                $response = VkModel::getResponse($method, $parameters);
+
+                if (isset($response['response'])) {
+                    foreach ($response['response'] as $key => $item) {
+
+                        if(Users::findOne(['vk' => $item['user_id']])) {
+                            $user = Users::findOne(['vk' => $item['user_id']]);
+                        } else {
+                            $user = new Users();
+                            $user_vk = VkModel::getUserData($item['user_id']);
+
+                            $user->vk = $item['user_id'];
+                            $user->firstname = $user_vk['response'][0]['first_name'];
+                            $user->lastname = $user_vk['response'][0]['last_name'];
+                            $user->save();
+                        }
+
+                        $vk_item = new VkItems();
+                        $vk_item->user_id = $user->id;
+                        $vk_item->group_id = $group->group_id;
+                        $vk_item->category = $album_type;
+                        $vk_item->url = 'photo' . $item['owner_id'] . '_' . $item['pid'];
+                        $vk_item->photo = $item['src_big'];
+                        $vk_item->description = $item['text'];
+                        $vk_item->timestamp = $item['created'];
+                        $vk_item->hash = md5(file_get_contents($item['src_small']));
+
+                        $method = 'photos.getComments';
+                        $parameters = [
+                            'owner_id' => $item['owner_id'],
+                            'photo_id' => $item['pid'],
+                            'access_token' => '547ddeb0f7ce109ad82861ca2546b6b0ce7b01fc7dff99406071d286eefb7467abb01040dc6e66b055902'
+                        ];
+
+                        $comments_response = VkModel::getResponse($method, $parameters);
+
+                        if (isset($comments_response['response'])) {
+                            foreach ($comments_response['response'] as $comment_key => $comment) {
+                                if ($comment['from_id'] == $item['user_id']) {
+                                    $vk_item->description .= $comment['message'];
+                                }
+                            }
+                        }
+
+                        $vk_item->description = preg_replace("/[^A-Za-z0-9 ]/", '',
+                            strtolower(UtilsModel::rus2translit(trim(strip_tags($vk_item->description)))));
+
+                        if (!VkItems::findOne(['hash' => $vk_item->hash])) {
+                            if (strlen($vk_item->description) > 10)
+                                $vk_item->save();
+
+                            echo $vk_item->hash . '<br />';
+                        }
+                    }
+                } else {
+                    print_r($response);
+                }
+            }
+        }
+    }
+
     public function actionStart()
     {
         set_time_limit(0);
@@ -86,7 +166,7 @@ class VkController extends \yii\web\Controller
                 $parameters = [
                     'owner_id' => '-' . $group->group_id,
                     'album_id' => $album_id,
-                    'count' => '25',
+                    'count' => '100',
                     'rev' => '1'
                 ];
 
