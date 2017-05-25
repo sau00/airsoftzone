@@ -69,11 +69,13 @@ class AwgmModel extends \yii\base\Model
     {
         preg_match_all('#class=\'socserv-ico vk\' href="(.*)">#iSU', $item_page, $vk_url);
         if (isset($vk_url[1][0])) {
-            $vk = VkModel::getVkUserData($vk_url[1][0]);
-            $user = Users::findOne(['vk' => $vk]);
+            $user_vk = VkModel::getUserData(preg_replace('#http://vk.com/#', '', $vk_url[1][0]));
+            $user = Users::findOne(['vk' => $user_vk['response'][0]['uid']]);
             if (!isset($user)) {
                 $user = new Users();
-                $user->vk = $vk;
+                $user->vk = $user_vk['response'][0]['uid'];
+                $user->firstname = $user_vk['response'][0]['first_name'];
+                $user->lastname = $user_vk['response'][0]['last_name'];
                 $user->save();
             }
 

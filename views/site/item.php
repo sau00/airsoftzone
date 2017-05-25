@@ -73,9 +73,10 @@ $this->title = $item->title . ' купить ' . $item->city_id->name;
                 <div class="col-md-4">
                     <div class="caption">
                         <p>
-                            <a href="https://vk.com/<?=$item->user_id->vk;?>" target="_blank" class="btn btn-block btn-info btn-lg">vk.com/<?=$item->user_id->vk;?></a>
+                            <a href="https://vk.com/<?=$item->user_id->vk;?>" target="_blank" class="btn btn-block btn-info">vk.com/id<?=$item->user_id->vk;?></a>
                         </p>
 
+                        <p><span class="text-muted">Контактное лицо</span> <br /> <?=$item->user_id->firstname;?> <?=$item->user_id->lastname;?></p>
                         <p><span class="text-muted">Город</span> <br /> <?=$item->city_id->name;?></p>
                         <p><span class="text-muted">Пересыл</span> <br /> <?php if($item->shipping == 1) echo 'Есть'; else echo 'Нет'?></p>
                         <p><span class="text-muted">Добавлено</span> <br /> <?=\yii\helpers\Html::displayDate($item->time);?></p>
