@@ -86,7 +86,7 @@ class VkController extends \yii\web\Controller
                 $parameters = [
                     'owner_id' => '-' . $group->group_id,
                     'album_id' => $album_id,
-                    'count' => '1000',
+                    'count' => '25',
                     'rev' => '1'
                 ];
 
