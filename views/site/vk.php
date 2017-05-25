@@ -14,14 +14,14 @@ $this->title = 'Агрегатор объявлений групп Вконта�
 
             <form action="/index.php?r=site/vk" method="get">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-9">
                         <div class="form-group">
                             <input type="text" name="query" class="form-control" placeholder="Введите запрос, например: KJW" value="<?=$query;?>">
                             <input type="hidden" name="r" value="site/vk">
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <button type="submit" class="btn btn-default">Искать объявления</button>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-success btn-block">Искать объявления</button>
                     </div>
                 </div>
             </form>
