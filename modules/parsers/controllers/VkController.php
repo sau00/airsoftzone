@@ -76,6 +76,7 @@ class VkController extends \yii\web\Controller
 
     public function actionStart()
     {
+        set_time_limit(0);
         $groups = VkGroups::find()->all();
 
         foreach($groups as $group) {
@@ -85,7 +86,7 @@ class VkController extends \yii\web\Controller
                 $parameters = [
                     'owner_id' => '-' . $group->group_id,
                     'album_id' => $album_id,
-                    'count' => '5',
+                    'count' => '1000',
                     'rev' => '1'
                 ];
 
