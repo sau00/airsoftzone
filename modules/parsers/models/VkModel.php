@@ -16,7 +16,8 @@ class VkModel extends Model
     public static function getUserData($id) {
         $method = 'users.get';
         $parameters = [
-            'user_ids' => $id
+            'user_ids' => $id,
+            'lang' => 0
         ];
 
         return self::getResponse($method, $parameters);
