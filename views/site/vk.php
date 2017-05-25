@@ -63,7 +63,7 @@ $this->title = 'Агрегатор объявлений групп Вконта�
                                 echo $categories[$item->category];
 
                                 ?></p>
-                            <p class="text-muted">Добавлено: <?=\yii\helpers\Html::displayDate(date('Y-m-d H:i:s', $item->timestamp)); ?></p>
+                            <p class="text-muted">Добавлено: <?=\yii\helpers\Html::displayDate(date('Y-m-d H:i:s', $item->timestamp + 10800)); ?></p>
                         </div>
                     </div>
                 </div>
