@@ -17,7 +17,7 @@ class VkModel extends Model
         $method = 'users.get';
         $parameters = [
             'user_ids' => $id,
-            'lang' => 0
+            'lang' => 'ru'
         ];
 
         return self::getResponse($method, $parameters);
