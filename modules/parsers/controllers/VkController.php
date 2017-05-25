@@ -99,6 +99,7 @@ class VkController extends \yii\web\Controller
                         } else {
                             $user = new Users();
                             $user_vk = VkModel::getUserData($item['user_id']);
+
                             $user->vk = $item['user_id'];
                             $user->firstname = $user_vk['response'][0]['first_name'];
                             $user->lastname = $user_vk['response'][0]['last_name'];

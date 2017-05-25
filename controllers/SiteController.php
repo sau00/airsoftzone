@@ -6,7 +6,9 @@ use app\models\Categories;
 use app\models\Cities;
 use app\models\Items;
 use app\models\Users;
+use app\models\VkGroups;
 use app\models\VkItems;
+use app\modules\parsers\models\UtilsModel;
 use Yii;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
@@ -88,40 +90,10 @@ class SiteController extends Controller
 
     public function actionVk()
     {
-        function rus2translit($string) {
-            $converter = array(
-                'а' => 'a',   'б' => 'b',   'в' => 'v',
-                'г' => 'g',   'д' => 'd',   'е' => 'e',
-                'ё' => 'e',   'ж' => 'zh',  'з' => 'z',
-                'и' => 'i',   'й' => 'y',   'к' => 'k',
-                'л' => 'l',   'м' => 'm',   'н' => 'n',
-                'о' => 'o',   'п' => 'p',   'р' => 'r',
-                'с' => 's',   'т' => 't',   'у' => 'u',
-                'ф' => 'f',   'х' => 'h',   'ц' => 'c',
-                'ч' => 'ch',  'ш' => 'sh',  'щ' => 'sch',
-                'ь' => '\'',  'ы' => 'y',   'ъ' => '\'',
-                'э' => 'e',   'ю' => 'yu',  'я' => 'ya',
-                ' ' => '_',
-
-                'А' => 'A',   'Б' => 'B',   'В' => 'V',
-                'Г' => 'G',   'Д' => 'D',   'Е' => 'E',
-                'Ё' => 'E',   'Ж' => 'Zh',  'З' => 'Z',
-                'И' => 'I',   'Й' => 'Y',   'К' => 'K',
-                'Л' => 'L',   'М' => 'M',   'Н' => 'N',
-                'О' => 'O',   'П' => 'P',   'Р' => 'R',
-                'С' => 'S',   'Т' => 'T',   'У' => 'U',
-                'Ф' => 'F',   'Х' => 'H',   'Ц' => 'C',
-                'Ч' => 'Ch',  'Ш' => 'Sh',  'Щ' => 'Sch',
-                'Ь' => '\'',  'Ы' => 'Y',   'Ъ' => '\'',
-                'Э' => 'E',   'Ю' => 'Yu',  'Я' => 'Ya'
-            );
-            return strtr($string, $converter);
-        }
-
         $request = Yii::$app->request;
 
         if($request->get('query')) {
-            $query = VkItems::find()->where(['like', 'description', rus2translit($request->get('query'))])->orderBy(['timestamp' => SORT_DESC]);
+            $query = VkItems::find()->where(['like', 'description', UtilsModel::rus2translit(trim($request->get('query')))])->orderBy(['timestamp' => SORT_DESC]);
         } else {
             $query = VkItems::find()->orderBy(['timestamp' => SORT_DESC]);
         }
@@ -132,12 +104,18 @@ class SiteController extends Controller
             ->limit($pagination->limit)
             ->all();
 
-        file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/uploads/items/log.txt', rus2translit($request->get('query')) . "\r\n", FILE_APPEND);
+        // Need to rework log later
+        file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/uploads/items/log.txt', UtilsModel::rus2translit($request->get('query')) . "\r\n", FILE_APPEND);
+
+        foreach($items as $item) {
+            $item->user_id = Users::findOne(['id' => $item->user_id]);
+            $item->group_id = VkGroups::findOne(['group_id' => $item->group_id]);
+        }
 
         return $this->render('vk', [
             'items' => $items,
             'pagination' => $pagination,
-            'query' => $request->get('query'),
+            'query' => trim($request->get('query')),
             'amount' => $count
         ]);
     }

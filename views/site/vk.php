@@ -35,31 +35,35 @@ $this->title = 'Агрегатор объявлений групп Вконта�
             <?php foreach ($items as $item): ?>
                 <div class="row">
                     <div class="col-md-4">
-                        <a href="#">
+                        <a href="https://vk.com/<?= $item->url; ?>" target="_blank">
                             <img class="img-responsive" src="<?= $item->photo; ?>" alt="">
                         </a>
                     </div>
                     <div class="col-md-8">
                         <div class="caption">
-                            <h2 style="margin-top: 5px;"><a href="https://vk.com/<?= $item->url; ?>"
-                                                            target="_blank"><?= $item->url; ?></a></h2>
+                            <h3 style="margin-top: 5px;"><a href="https://vk.com/<?= $item->url; ?>" target="_blank"><?= $item->url; ?></a></h3>
                             <p class="text-muted"><a
-                                        href="https://vk.com/id<?= $item->author_id; ?>"
-                                        target="_blank">vk.com/id<?= $item->author_id; ?></a>
+                                        href="https://vk.com/id<?= $item->user_id->vk; ?>"
+                                        target="_blank"><?= $item->user_id->firstname; ?> <?= $item->user_id->lastname; ?></a>
+                                <br />
+                                <span class="text-muted">vk.com/id<?= $item->user_id->vk; ?></span>
                             </p>
-                            <p class="text-muted"><a href="https://vk.com/public<?= $item->group_id; ?>"
-                                                     target="_blank">
-                                    <?php
-                                    $groups = [
-                                        '76629546' => 'СТРАЙКБОЛЬНАЯ БАРАХОЛКА | страйкбол',
-                                        '13212026' => 'Единая Страйкбольная Группа Страйкбол',
-                                        '45753674' => 'Страйкбол базар AIRSOFT4YOU'
-                                    ];
 
-                                    echo $groups[$item->group_id];
-                                    ?>
-                                </a></p>
-                            <p class="text-muted">Добавлено: <?= date('Y-m-d H:i:s', $item->timestamp); ?></p>
+                            <p class="text-muted"><a
+                                        href="https://vk.com/public<?= $item->group_id->group_id; ?>"
+                                        target="_blank"><?= $item->group_id->name; ?></a>
+                            </p>
+                            <p class="text-muted">Категория: <?php
+                                $categories = [
+                                        'w' => 'Приводы',
+                                        'g' => 'Аксессуары и Запчасти',
+                                        'e' => 'Экипировка и снаряжение'
+                                ];
+
+                                echo $categories[$item->category];
+
+                                ?></p>
+                            <p class="text-muted">Добавлено: <?=\yii\helpers\Html::displayDate(date('Y-m-d H:i:s', $item->timestamp)); ?></p>
                         </div>
                     </div>
                 </div>
