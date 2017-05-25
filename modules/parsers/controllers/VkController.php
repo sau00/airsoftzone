@@ -76,6 +76,8 @@ class VkController extends \yii\web\Controller
 
     public function actionParse()
     {
+        set_time_limit(0);
+
         $request = \Yii::$app->request;
 
         if(VkGroups::findOne(['group_id' => $request->get('group')])) {
