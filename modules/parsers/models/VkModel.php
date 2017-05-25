@@ -13,9 +13,18 @@ use yii\base\Model;
 
 class VkModel extends Model
 {
-    // Позднее надо будет переписать, чтобы брало данные с VK api
-    public static function getVkUserData($user_link) {
-        $user_id = array_reverse(explode('/', $user_link));
-        return $user_id[0];
+    public static function getUserData($id) {
+        $method = 'users.get';
+        $parameters = [
+            'user_ids' => $id
+        ];
+
+        return self::getResponse($method, $parameters);
+    }
+
+    public static function getResponse($method, $parameters)
+    {
+        $url = 'https://api.vk.com/method/' . $method . '?' . http_build_query($parameters);
+        return json_decode(file_get_contents($url), TRUE);
     }
 }
