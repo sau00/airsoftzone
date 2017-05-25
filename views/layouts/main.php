@@ -39,7 +39,7 @@ AppAsset::register($this);
             ['label' => 'Поиск по группам', 'url' => ['/site/vk']],
             [
                 'label' => 'Подать объявление',
-                'url' => 'https://vk.com/airsoftzoneru?w=wall-145778249_4',
+                'url' => 'https://vk.com/im?media=&sel=-145778249',
                 'template'=> '<a href="{url}" target="_blank">{label}</a>',
             ],
             ['label' => 'О проекте', 'url' => ['/site/about']]
