@@ -70,6 +70,10 @@ class AwgmModel extends \yii\base\Model
         preg_match_all('#class=\'socserv-ico vk\' href="(.*)">#iSU', $item_page, $vk_url);
         if (isset($vk_url[1][0])) {
             $user_vk = VkModel::getUserData(preg_replace('#http://vk.com/#', '', $vk_url[1][0]));
+
+            if(!isset($user_vk['response']))
+                return null;
+
             $user = Users::findOne(['vk' => $user_vk['response'][0]['uid']]);
             if (!isset($user)) {
                 $user = new Users();
