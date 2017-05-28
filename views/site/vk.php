@@ -1,5 +1,5 @@
 <?php
-$this->title = 'Агрегатор объявлений групп Вконтакте';
+$this->title = 'Поиск по барахолкам Вконтакте';
 ?>
 
 <div class="container">
@@ -14,14 +14,32 @@ $this->title = 'Агрегатор объявлений групп Вконта�
 
             <form action="/index.php?r=site/vk" method="get">
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-3" style="padding-right: 0;">
+                        <select class="form-control" id="select" name="cat">
+                            <?php
+
+                            $categories = [
+                                'a' => 'Все категории',
+                                'w' => 'Приводы',
+                                'g' => 'Аксессуары и Запчасти',
+                                'e' => 'Экипировка и Снаряжение'
+                            ];
+
+                            ?>
+
+                            <?php foreach ($categories as $key => $category): ?>
+                                <option value="<?=$key;?>"<?php if ($key == Yii::$app->request->get('cat')): ?> selected<?php endif; ?>><?=$category;?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="col-md-7" style="padding-right: 0;">
                         <div class="form-group">
                             <input type="text" name="query" class="form-control" placeholder="Введите запрос, например: KJW" value="<?=$query;?>">
                             <input type="hidden" name="r" value="site/vk">
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <button type="submit" class="btn btn-success btn-block">Искать объявления</button>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-success btn-block">Найти</button>
                     </div>
                 </div>
             </form>
@@ -53,16 +71,7 @@ $this->title = 'Агрегатор объявлений групп Вконта�
                                         href="https://vk.com/public<?= $item->group_id->group_id; ?>"
                                         target="_blank"><?= $item->group_id->name; ?></a>
                             </p>
-                            <p class="text-muted">Категория: <?php
-                                $categories = [
-                                        'w' => 'Приводы',
-                                        'g' => 'Аксессуары и Запчасти',
-                                        'e' => 'Экипировка и снаряжение'
-                                ];
-
-                                echo $categories[$item->category];
-
-                                ?></p>
+                            <p class="text-muted">Категория: <?=$categories[$item->category]; ?></p>
                             <p class="text-muted">Добавлено: <?=\yii\helpers\Html::displayDate(date('Y-m-d H:i:s', $item->timestamp + 10800)); ?></p>
                         </div>
                     </div>
