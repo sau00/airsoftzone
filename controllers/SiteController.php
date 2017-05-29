@@ -93,42 +93,23 @@ class SiteController extends Controller
     {
         $request = Yii::$app->request;
 
-        if($request->get('id')) {
-            $vk_item = VkItems::findOne($request->get('id'));
+        $item = VkItems::findOne(intval($request->get('id')));
 
-            $group = VkGroups::findOne(['group_id' => $vk_item->group_id]);
-            $albums = unserialize($group->albums);
+        $item->user_id = Users::findOne(['id' => $item->user_id]);
+        $item->group_id = VkGroups::findOne(['group_id' => $item->group_id]);
 
-            foreach($albums as $key => $album) {
-                if($album == $vk_item->category) {
-                    $album_id = $key;
-                }
-            }
+        if($item) {
+            if(!$item->description_raw)
+                VkModel::getPhotoDescription($item, VkGroups::findOne(['group_id' => $item['group_id']])) ;
 
-            echo $vk_item->description_raw;
-
-            if(!$vk_item->description_raw) {
-                echo $vk_item->url;
-                $photo = explode('-', $vk_item->url)[1];
-
-                $method = 'photos.getById';
-                $parameters = [
-                    'photos' => '-' . $photo,
-                    'access_token' => '547ddeb0f7ce109ad82861ca2546b6b0ce7b01fc7dff99406071d286eefb7467abb01040dc6e66b055902'
-                ];
-
-                $item_data = VkModel::getResponse($method, $parameters);
-
-                if(isset($item_data['response'])) {
-                    if(isset($item_data['response'][0])) {
-                        $vk_item->description_raw = $item_data['response'][0]['text'];
-                        var_dump($vk_item->save());
-                    }
-                }
-            }
-
+            return $this->render('vk_item', [
+                'item' => $item,
+            ]);
         } else {
-            echo '404';
+            return $this->render('error', [
+                'message' => 'Такой страницы не существует',
+                'name' => 'Ошибка 404'
+            ]);
         }
     }
 
