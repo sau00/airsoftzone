@@ -49,7 +49,39 @@ $categories = [
                     </div>
                 </div>
             </div>
-
         </div><!--/.col-xs-12.col-sm-9-->
+        <div class="col-md-12">
+            <h2>Другие объявления пользователя</h2>
+            <hr />
+            <?php foreach ($user_items as $item): ?>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a href="https://vk.com/<?= $item->url; ?>" target="_blank">
+                                <img class="img-responsive" src="<?= $item->photo; ?>" alt="">
+                            </a>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="caption">
+                                <h3 style="margin-top: 5px;"><a href="/index.php?r=site/vk-item&id=<?= $item->id; ?>" target="_blank"><?= $item->url; ?></a></h3>
+                                <p class="text-muted"><a
+                                            href="https://vk.com/id<?= $item->user_id->vk; ?>"
+                                            target="_blank"><?= $item->user_id->firstname; ?> <?= $item->user_id->lastname; ?></a>
+                                    <br />
+                                    <span class="text-muted">vk.com/id<?= $item->user_id->vk; ?></span>
+                                </p>
+
+                                <p class="text-muted"><a
+                                            href="https://vk.com/public<?= $item->group_id->group_id; ?>"
+                                            target="_blank"><?= $item->group_id->name; ?></a>
+                                </p>
+                                <p class="text-muted">Категория: <?=$categories[$item->category]; ?></p>
+                                <p class="text-muted">Добавлено: <?=\yii\helpers\Html::displayDate(date('Y-m-d H:i:s', $item->timestamp + 10800)); ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
     </div><!--/row-->
 </div><!--/.container-->

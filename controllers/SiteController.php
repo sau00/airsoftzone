@@ -95,15 +95,29 @@ class SiteController extends Controller
 
         $item = VkItems::findOne(intval($request->get('id')));
 
-        $item->user_id = Users::findOne(['id' => $item->user_id]);
-        $item->group_id = VkGroups::findOne(['group_id' => $item->group_id]);
-
         if($item) {
             if(!$item->description_raw)
                 VkModel::getPhotoDescription($item, VkGroups::findOne(['group_id' => $item['group_id']])) ;
 
+            $user_items = VkItems::find()
+                ->where(['user_id' => $item->user_id])
+                ->andWhere('id != :id', ['id' => $item->id])
+                ->orderBy(['timestamp' => SORT_DESC])
+                ->all();
+
+            $item->user_id = Users::findOne(['id' => $item->user_id]);
+            $item->group_id = VkGroups::findOne(['group_id' => $item->group_id]);
+
+            foreach($user_items as $key => $user_item)
+            {
+
+                $user_item->user_id = Users::findOne(['id' => $user_item->user_id]);
+                $user_item->group_id = VkGroups::findOne(['group_id' => $user_item->group_id]);
+            }
+
             return $this->render('vk_item', [
                 'item' => $item,
+                'user_items' => $user_items
             ]);
         } else {
             return $this->render('error', [
