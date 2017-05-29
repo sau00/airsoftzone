@@ -117,23 +117,17 @@ class SiteController extends Controller
     {
         $request = Yii::$app->request;
 
-        if($request->get('query')) {
-            $query = VkItems::find()
-                ->where(['like', 'description', UtilsModel::rus2translit(trim($request->get('query')))])
-                ->andWhere(['category' => trim($request->get('cat'))])
-                ->orderBy(['timestamp' => SORT_DESC]);
-        } elseif (trim($request->get('cat'))) {
-            if(trim($request->get('cat')) != 'a') {
-                $query = VkItems::find()->where(
-                    ['category' => trim($request->get('cat'))]
-                )->orderBy(['timestamp' => SORT_DESC]);
-            } else {
-                $query = VkItems::find()->orderBy(['timestamp' => SORT_DESC]);
-            }
+        $query = VkItems::find();
+
+        if($request->get('query'))
+            $query->where(['like', 'description', UtilsModel::rus2translit(trim($request->get('query')))]);
+
+        if($request->get('cat')) {
+            if(trim($request->get('cat')) != 'a')
+                $query->andWhere(['category' => trim($request->get('cat'))]);
         }
-        else {
-            $query = VkItems::find()->orderBy(['timestamp' => SORT_DESC]);
-        }
+
+        $query->orderBy(['timestamp' => SORT_DESC]);
 
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count]);
