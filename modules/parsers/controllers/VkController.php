@@ -23,9 +23,9 @@ class VkController extends \yii\web\Controller
             [
                 'group_id' => '13212026',
                 'albums' => [
-                    '244826162' => 'w', //weapon
-                    '244826144' => 'e', //equipment
-                    '244826183' => 'g' //gear
+                    '245330641' => 'w', //weapon
+                    '245330663' => 'e', //equipment
+                    '245330622' => 'g' //gear
                 ],
                 'name' => 'Единая Страйкбольная Группа Страйкбол'
             ],
