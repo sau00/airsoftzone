@@ -9,6 +9,7 @@ use app\models\Users;
 use app\models\VkGroups;
 use app\models\VkItems;
 use app\modules\parsers\models\UtilsModel;
+use app\modules\parsers\models\VkModel;
 use Yii;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
@@ -86,6 +87,49 @@ class SiteController extends Controller
             'items' => $items,
             'pagination' => $pagination
         ]);
+    }
+
+    public function actionVkItem()
+    {
+        $request = Yii::$app->request;
+
+        if($request->get('id')) {
+            $vk_item = VkItems::findOne($request->get('id'));
+
+            $group = VkGroups::findOne(['group_id' => $vk_item->group_id]);
+            $albums = unserialize($group->albums);
+
+            foreach($albums as $key => $album) {
+                if($album == $vk_item->category) {
+                    $album_id = $key;
+                }
+            }
+
+            echo $vk_item->description_raw;
+
+            if(!$vk_item->description_raw) {
+                echo $vk_item->url;
+                $photo = explode('-', $vk_item->url)[1];
+
+                $method = 'photos.getById';
+                $parameters = [
+                    'photos' => '-' . $photo,
+                    'access_token' => '547ddeb0f7ce109ad82861ca2546b6b0ce7b01fc7dff99406071d286eefb7467abb01040dc6e66b055902'
+                ];
+
+                $item_data = VkModel::getResponse($method, $parameters);
+
+                if(isset($item_data['response'])) {
+                    if(isset($item_data['response'][0])) {
+                        $vk_item->description_raw = $item_data['response'][0]['text'];
+                        var_dump($vk_item->save());
+                    }
+                }
+            }
+
+        } else {
+            echo '404';
+        }
     }
 
     public function actionVk()
