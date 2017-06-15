@@ -106,7 +106,8 @@ class SiteController extends Controller
             'items' => $items,
             'categories' => $categories,
             'pagination' => $pagination,
-            'cities' => $cities
+            'cities' => $cities,
+            'amount' => $count,
         ]);
     }
 
