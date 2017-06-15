@@ -45,8 +45,8 @@
             </div>
             <div class="col-md-2">
                 <select class="form-control" id="select" name="city">
+                    <option value="">Все города</option>
                     <?php foreach ($cities as $key => $city): ?>
-                        <option value="">Все города</option>
                         <option value="<?=$city->id;?>"<?php if ($city->id == Yii::$app->request->get('city')): ?> selected<?php endif; ?>><?=$city->name;?></option>
                     <?php endforeach; ?>
                 </select>
