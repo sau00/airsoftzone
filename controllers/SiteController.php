@@ -69,7 +69,23 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $query = Items::find()->orderBy(['time' => SORT_DESC]);
+        $request = Yii::$app->request;
+
+        $query = Items::find();
+
+        if($request->get('query'))
+            $query->where(['like', 'title', trim($request->get('query'))]);
+        else
+            $query = $query->orderBy(['time' => SORT_DESC]);
+
+
+        if($request->get('cat')) {
+            $query->andWhere(['category_id' => trim($request->get('cat'))]);
+        }
+
+        if($request->get('city')) {
+            $query->andWhere(['city_id' => trim($request->get('city'))]);
+        }
 
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count]);
@@ -83,9 +99,14 @@ class SiteController extends Controller
             $item->category_id = Categories::findOne(['id' => $item->category_id]);
         }
 
+        $categories = Categories::find()->all();
+        $cities = Cities::find()->all();
+
         return $this->render('index', [
             'items' => $items,
-            'pagination' => $pagination
+            'categories' => $categories,
+            'pagination' => $pagination,
+            'cities' => $cities
         ]);
     }
 
@@ -97,7 +118,7 @@ class SiteController extends Controller
 
         if($item) {
             if(!$item->description_raw)
-                VkModel::getPhotoDescription($item, VkGroups::findOne(['group_id' => $item['group_id']])) ;
+                VkModel::getPhotoDescription($item, VkGroups::findOne(['group_id' => $item['group_id']]));
 
             $user_items = VkItems::find()
                 ->where(['user_id' => $item->user_id])
@@ -110,7 +131,6 @@ class SiteController extends Controller
 
             foreach($user_items as $key => $user_item)
             {
-
                 $user_item->user_id = Users::findOne(['id' => $user_item->user_id]);
                 $user_item->group_id = VkGroups::findOne(['group_id' => $user_item->group_id]);
             }
@@ -185,70 +205,5 @@ class SiteController extends Controller
                 'name' => 'Ошибка 404'
             ]);
         }
-    }
-
-    public function actionAlpha()
-    {
-        return $this->render('alpha');
-    }
-
-    /**
-     * Login action.
-     *
-     * @return string
-     */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Logout action.
-     *
-     * @return string
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
-    }
-
-    /**
-     * Displays contact page.
-     *
-     * @return string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
     }
 }

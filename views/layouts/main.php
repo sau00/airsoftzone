@@ -31,18 +31,22 @@ AppAsset::register($this);
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-default navbar-fixed-top',
+            'style' => 'border: none;'
         ],
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Поиск по группам', 'url' => ['/site/vk']],
             [
                 'label' => 'Подать объявление',
                 'url' => 'https://vk.com/im?media=&sel=-145778249',
-                'template'=> '<a href="{url}" target="_blank">{label}</a>',
+                'options' => [
+                    'class' => [
+                            'btn-info'
+                    ]
+                ]
             ],
-            ['label' => 'О проекте', 'url' => ['/site/about']]
+            ['label' => 'Поиск по группам', 'url' => ['/site/vk']],
         ],
     ]);
     NavBar::end();

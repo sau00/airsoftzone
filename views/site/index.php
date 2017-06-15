@@ -5,15 +5,66 @@
 <div class="container">
 
     <h1><?=$this->title;?></h1>
+    <hr />
+    <form action="/index.php?r=site/vk" method="get">
+        <div class="row">
+            <div class="col-md-3">
+                <select class="form-control" id="select" name="cat">
+                    <option value="">Любая категория</option>
+                    <?php foreach ($categories as $key => $category): ?>
+                        <?php
+                            if($category->id == Yii::$app->request->get('cat'))
+                                $selected = 'selected';
+                            else
+                                $selected = '';
+
+                            if($category->parent_id == null) {
+                                echo '<option value="' . $category->id . '" ' . $selected . '><strong>' . $category->name . '</strong></option>';
+                            }
+
+                            foreach($categories as $child_key => $child_category) {
+
+                                if($child_category->id == Yii::$app->request->get('cat'))
+                                    $selected = 'selected';
+                                else
+                                    $selected = '';
+
+                                if($child_category->parent_id == $category->id) {
+                                    echo '<option value="' . $child_category->id . '" ' . $selected . '>  — ' . $child_category->name . '</option>';
+                                }
+                            }
+                        ?>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <input type="text" name="query" class="form-control" placeholder="Поиск по объявлениям" value="<?=Yii::$app->request->get('query');?>">
+                    <input type="hidden" name="r" value="site/index">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <select class="form-control" id="select" name="city">
+                    <?php foreach ($cities as $key => $city): ?>
+                        <option value="">Все города</option>
+                        <option value="<?=$city->id;?>"<?php if ($city->id == Yii::$app->request->get('city')): ?> selected<?php endif; ?>><?=$city->name;?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="col-md-2" >
+                <button type="submit" class="btn btn-success btn-block">Найти</button>
+            </div>
+        </div>
+    </form>
+
+    <h3>Найдено <?=count($items); ?> объявлений</h3>
 
     <hr />
 
     <div class="row row-offcanvas row-offcanvas-right">
 
+
         <div class="col-xs-12 col-sm-9">
-            <p class="pull-right visible-xs">
-                <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
-            </p>
 
             <?php foreach ($items as $item): ?>
                 <div class="row">

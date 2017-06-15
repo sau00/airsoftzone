@@ -46,10 +46,6 @@ $this->title = 'Поиск по барахолкам Вконтакте';
             <h3>Найдено <?=$amount; ?> объявлений</h3>
             <hr />
 
-            <p class="pull-right visible-xs">
-                <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
-            </p>
-
             <?php foreach ($items as $item): ?>
                 <div class="row">
                     <div class="col-md-4">
