@@ -59,7 +59,7 @@ $this->title = 'Поиск по барахолкам Вконтакте';
                     </div>
                     <div class="col-md-8">
                         <div class="caption">
-                            <h3 style="margin-top: 5px;"><a href="/index.php?r=site/vk-item&id=<?= $item->id; ?>" target="_blank"><?= $item->url; ?></a></h3>
+                            <h3 style="margin-top: 5px;"><a href="<?=\yii\helpers\Url::to(['site/vk-item', 'id' => $item->id]);?>" target="_blank"><?= $item->url; ?></a></h3>
                             <p class="text-muted"><a
                                         href="https://vk.com/id<?= $item->user_id->vk; ?>"
                                         target="_blank"><?= $item->user_id->firstname; ?> <?= $item->user_id->lastname; ?></a>
