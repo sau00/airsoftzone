@@ -14,7 +14,7 @@ $this->title = 'Поиск по барахолкам Вконтакте';
 
             <form action="/index.php?r=site/vk" method="get">
                 <div class="row">
-                    <div class="col-md-3" style="padding-right: 0;">
+                    <div class="col-md-3">
                         <select class="form-control" id="select" name="cat">
                             <?php
 
@@ -32,7 +32,7 @@ $this->title = 'Поиск по барахолкам Вконтакте';
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <div class="col-md-7" style="padding-right: 0;">
+                    <div class="col-md-7">
                         <div class="form-group">
                             <input type="text" name="query" class="form-control" placeholder="Введите запрос, например: KJW" value="<?=$query;?>">
                             <input type="hidden" name="r" value="site/vk">
