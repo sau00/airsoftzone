@@ -6,7 +6,7 @@
 
     <h1><?=$this->title;?></h1>
     <hr />
-    <form action="/index.php?r=site/vk" method="get">
+    <form action="/?r=site/vk" method="get">
         <div class="row">
             <div class="col-md-3">
                 <select class="form-control" id="select" name="cat">

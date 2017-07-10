@@ -12,7 +12,7 @@ $this->title = 'Поиск по барахолкам Вконтакте';
 
         <div class="col-xs-12 col-sm-9">
 
-            <form action="/index.php?r=site/vk" method="get">
+            <form action="" method="get">
                 <div class="row">
                     <div class="col-md-3">
                         <select class="form-control" id="select" name="cat">
