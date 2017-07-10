@@ -71,7 +71,8 @@ class ProfileController extends Controller
 
     public function actionIndex()
     {
-        echo 'Test';
+
+        return $this->render('index');
     }
 
     public function actionLogin()
@@ -84,7 +85,8 @@ class ProfileController extends Controller
 
     public function actionAdd()
     {
-        return $this->render('add');
+        echo 'Add Advert';
+//        return $this->render('add');
     }
 
     public function actionEdit()

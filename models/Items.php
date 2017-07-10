@@ -11,6 +11,7 @@ use Yii;
  * @property integer $user_id
  * @property integer $category_id
  * @property integer $city_id
+ * @property string $alias
  * @property string $title
  * @property string $description
  * @property integer $price
@@ -34,11 +35,13 @@ class Items extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'category_id', 'city_id', 'title', 'images'], 'required'],
+            [['user_id', 'category_id', 'city_id', 'alias', 'title', 'images'], 'required'],
             [['user_id', 'category_id', 'city_id', 'price', 'shipping'], 'integer'],
             [['description', 'images'], 'string'],
             [['time'], 'safe'],
+            [['alias'], 'string', 'max' => 255],
             [['title'], 'string', 'max' => 45],
+            [['alias'], 'unique'],
         ];
     }
 
@@ -52,6 +55,7 @@ class Items extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'category_id' => 'Category ID',
             'city_id' => 'City ID',
+            'alias' => 'Alias',
             'title' => 'Title',
             'description' => 'Description',
             'price' => 'Price',

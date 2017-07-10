@@ -75,7 +75,7 @@
                     </div>
                     <div class="col-md-8">
                         <div class="caption">
-                            <h2 style="margin-top: 5px;"><a href="<?=\yii\helpers\Url::to(['site/item', 'id' => $item->id]);?>"><?=$item->title;?></a></h2>
+                            <h2 style="margin-top: 5px;"><a href="<?=\yii\helpers\Url::to([$item->city_id->alias . '/' . $item->category_id->alias . '/' . $item->alias]);?>"><?=$item->title;?></a></h2>
                             <h4><?=$item->price;?> руб.</h4>
                             <p class="text-muted"><?=$item->category_id->name;?></p>
                             <p class="text-muted">г. <?=$item->city_id->name;?></p>

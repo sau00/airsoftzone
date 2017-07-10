@@ -5,6 +5,7 @@ namespace app\modules\parsers\controllers;
 use app\models\Items;
 use \app\models\Users;
 use app\modules\parsers\models\AwgmModel;
+use app\modules\parsers\models\UtilsModel;
 
 /**
  * Created by PhpStorm.
@@ -51,6 +52,10 @@ class AwgmController extends \yii\web\Controller
 
                 $item->price = AwgmModel::getPrice($item_page);
                 if (is_null($item->price))
+                    continue;
+
+                $item->alias = strtolower(UtilsModel::rus2translit($item->title)) . '_' . time();
+                if(is_null($item->alias))
                     continue;
 
                 $images = AwgmModel::getImages($item_page);

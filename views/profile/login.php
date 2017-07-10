@@ -17,28 +17,13 @@ $this->title = 'Авторизация пользователей';
 ?>
 
 <div class="container">
-    <div class="col-md-6">
-        <h2>Авторизация</h2>
-        <?= yii\authclient\widgets\AuthChoice::widget([
-            'baseAuthUrl' => ['profile/auth'],
-            'popupMode' => false,
-        ]) ?>
+    <div class="col-md-12">
+        <h2>Авторизоваться через Вконтакте: </h2>
+        <center>
+            <?= yii\authclient\widgets\AuthChoice::widget([
+                'baseAuthUrl' => ['profile/auth'],
+                'popupMode' => false,
+            ]) ?>
+        </center>
     </div>
-    <div class="col-md-6">
-        <h2>Регистрация пользователя</h2>
-        <?= yii\authclient\widgets\AuthChoice::widget([
-            'baseAuthUrl' => ['profile/auth'],
-            'popupMode' => false,
-        ]) ?>
-    </div>
-
-    <div class="row row-offcanvas row-offcanvas-right">
-
-        <div class="col-xs-12 col-sm-9">
-            <p class="pull-right visible-xs">
-                <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
-            </p>
-
-        </div><!--/.col-xs-12.col-sm-9-->
-    </div><!--/row-->
 </div>

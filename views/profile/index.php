@@ -7,14 +7,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-
-<?= yii\authclient\widgets\AuthChoice::widget([
-    'baseAuthUrl' => ['profile/auth'],
-    'popupMode' => false,
-]) ?>
 
 <?php
 $this->title = 'Доска страйкбольных объявлений AirsoftZone';
@@ -22,12 +15,17 @@ $this->title = 'Доска страйкбольных объявлений Airso
 
 <div class="container">
 
-    <h1><?=$this->title;?></h1>
-    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <h3>Панель управления</h3>
+            <a href="<?=\yii\helpers\Url::to(['profile/add']);?>" class="btn btn-block btn-success">Подать объявление</a>
+        </div>
 
-    <h3>Панель управления</h3>
+        <div class="col-md-9">
+            <h3>Мои объявления</h3>
+        </div>
 
-    <hr />
+    </div>
 
     <div class="row row-offcanvas row-offcanvas-right">
 

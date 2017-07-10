@@ -190,7 +190,17 @@ class SiteController extends Controller
     {
         $request = Yii::$app->request;
 
-        $item = Items::findOne(['id' => $request->get('id')]);
+        $city = Cities::findOne(['alias' => $request->get('city')]);
+        $category = Categories::findOne(['alias' => $request->get('category')]);
+
+        if($category && $city)
+            $item = Items::findOne(['alias' => $request->get('alias'), 'city_id' => $city->id, 'category_id' => $category->id]);
+        else {
+            return $this->render('error', [
+                'message' => 'Такой страницы не существует',
+                'name' => 'Ошибка 404'
+            ]);
+        }
 
         if(isset($item)) {
             $item->user_id = Users::findOne(['id' => $item->user_id]);
