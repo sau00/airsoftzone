@@ -52,7 +52,7 @@
                 </select>
             </div>
             <div class="col-md-2" >
-                <button type="submit" class="btn btn-success btn-block">Найти</button>
+                <button type="submit" class="btn btn-primary btn-block">Найти</button>
             </div>
         </div>
     </form>
@@ -95,7 +95,7 @@
             <!-- VK Widget -->
             <div id="vk_groups" style="margin: 0 auto;"></div>
             <script type="text/javascript">
-                VK.Widgets.Group("vk_groups", {mode: 3}, 145778249);
+                VK.Widgets.Group("vk_groups", {mode: 3, width: "auto"}, 145778249);
             </script>
         </div><!--/.sidebar-offcanvas-->
     </div><!--/row-->

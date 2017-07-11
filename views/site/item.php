@@ -51,7 +51,7 @@ $this->title = $item->title . ' купить ' . $item->city_id->name;
                                 <!-- Bottom switcher of slider -->
                                 <ul class="hide-bullets">
                                     <?php foreach($images as $key => $image): ?>
-                                        <li class="col-md-1" style="padding: 1px;">
+                                        <li class="col-md-2" style="padding: 1px;">
                                             <a class="thumbnail" id="carousel-selector-<?=$key;?>"><img src="/uploads/items/<?=$item->id;?>/<?=$image; ?>"></a>
                                         </li>
                                     <?php endforeach; ?>
@@ -70,7 +70,7 @@ $this->title = $item->title . ' купить ' . $item->city_id->name;
                 <div class="col-md-4">
                     <div class="caption">
                         <p>
-                            <a href="https://vk.com/id<?=$item->user_id->vk;?>" target="_blank" class="btn btn-block btn-info">vk.com/id<?=$item->user_id->vk;?></a>
+                            <a href="https://vk.com/id<?=$item->user_id->vk;?>" target="_blank" class="btn btn-block btn-primary">vk.com/id<?=$item->user_id->vk;?></a>
                         </p>
 
                         <p><span class="text-muted">Контактное лицо</span> <br /> <?=$item->user_id->firstname;?> <?=$item->user_id->lastname;?></p>

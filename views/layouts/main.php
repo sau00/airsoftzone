@@ -40,10 +40,10 @@ AppAsset::register($this);
         'items' => [
             [
                 'label' => 'Подать объявление',
-                'url' => 'https://vk.com/im?media=&sel=-145778249',
+                'url' => ['/profile/add'],
                 'options' => [
                     'class' => [
-                            'btn-info'
+                            'btn-primary'
                     ]
                 ]
             ],

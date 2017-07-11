@@ -32,8 +32,6 @@ class AuthHandler
 
         $user = Users::findOne(['vk' => ArrayHelper::getValue($attributes, 'uid')]);
 
-        $user->save();
-
         if($user) {
             $user->firstname = ArrayHelper::getValue($attributes, 'first_name');
             $user->lastname = ArrayHelper::getValue($attributes, 'last_name');
