@@ -30,17 +30,17 @@ $categories = [
                 </div>
                 <div class="col-md-6">
                     <div class="caption">
-                        <h3 style="margin-top: 5px;"><a href="https://vk.com/<?= $item->url; ?>" target="_blank"><?= $item->url; ?></a></h3>
+                        <h3 style="margin-top: 5px;"><noindex><a href="https://vk.com/<?= $item->url; ?>" target="_blank" rel="nofollow"><?= $item->url; ?></a></noindex></h3>
                         <p class="text-muted"><a
                                 href="https://vk.com/id<?= $item->user_id->vk; ?>"
-                                target="_blank"><?= $item->user_id->firstname; ?> <?= $item->user_id->lastname; ?></a>
+                                target="_blank" rel="nofollow"><?= $item->user_id->firstname; ?> <?= $item->user_id->lastname; ?></a>
                             <br />
                             <span class="text-muted">vk.com/id<?= $item->user_id->vk; ?></span>
                         </p>
 
                         <p class="text-muted">Группа: <br /><a
                                 href="https://vk.com/public<?= $item->group_id->group_id; ?>"
-                                target="_blank"><?= $item->group_id->name; ?></a>
+                                target="_blank" rel="nofollow"><?= $item->group_id->name; ?></a>
                         </p>
                         <p><span class="text-muted">Категория:</span> <br /> <?=$categories[$item->category]; ?></p>
                         <p><span class="text-muted">Добавлено:</span> <br /> <?=\yii\helpers\Html::displayDate(date('Y-m-d H:i:s', $item->timestamp + 10800)); ?></p>
