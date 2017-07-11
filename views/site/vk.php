@@ -86,6 +86,12 @@ $this->title = 'Поиск по барахолкам Вконтакте';
             <script type="text/javascript">
                 VK.Widgets.Group("vk_groups", {mode: 3, width: "auto"}, 145778249);
             </script>
+            
+            <h3>Партнёры проекта</h3>
+
+            <a href="https://vk.com/tactical_funboys" target="_blank" rel="nofollow">
+                <img src="/tfb.jpg" class="img-responsive">
+            </a>
         </div><!--/.sidebar-offcanvas-->
     </div><!--/row-->
 </div>
